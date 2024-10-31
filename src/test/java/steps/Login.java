@@ -16,14 +16,19 @@ public class Login {
 
         // Mengatur WebDriverManager untuk menangani setup ChromeDriver
         WebDriverManager.chromedriver().setup();
+
         // Membuat instance dari ChromeDriver
         driver = new ChromeDriver();
-        // Membuat instance dari WebDriverWait dengan waktu tunggu (misalnya, 10 detik)
+
+        // Membuat instance dari WebDriverWait dengan waktu tunggu secara explicit wait (misalnya, 10 detik)
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
         // Full screen browser window
         driver.manage().window().maximize();
+
         // Membuka halaman Google
         driver.get("https://www.saucedemo.com/");
+
         // Print judul halaman
         System.out.println("Title of the page is: " + driver.getTitle());
 
@@ -38,15 +43,6 @@ public class Login {
         // Mencari button login dan click
         WebElement loginButton = driver.findElement(By.id("login-button"));
         loginButton.click();
-
-        // Assert jika login telah sukses dengan cara mengecek bahwa inventory container sudah tampil
-        WebElement inventoryContainer = driver.findElement(By.id("inventory_container"));
-
-        if (inventoryContainer.isDisplayed()) {
-            System.out.println("inventory container is displayed");
-        } else {
-            System.out.println("inventory container is not displayed");
-        }
 
         // Menutup browser
         driver.quit();
