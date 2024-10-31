@@ -12,23 +12,38 @@ import org.testng.Assert;
 
 public class Login {
 
-    //Declaration
     WebDriver driver;
     WebDriverWait wait;
+
+
+    // Constructor to initialize WebDriver and WebDriverWait
+    public Login() {
+        // Set up ChromeDriver using WebDriverManager
+        WebDriverManager.chromedriver().setup();
+
+        // Initialize ChromeDriver instance
+        this.driver = new ChromeDriver();
+
+        // Initialize WebDriverWait instance with a 5-second timeout
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+
+        // Maximize the browser window
+        driver.manage().window().maximize();
+    }
 
     public void loginTestCase() {
 
         // Mengatur WebDriverManager untuk menangani setup ChromeDriver
-        WebDriverManager.chromedriver().setup();
-
-        // Membuat instance dari ChromeDriver
-        driver = new ChromeDriver();
-
-        // Membuat instance dari WebDriverWait dengan waktu tunggu secara explicit wait (misalnya, 5 detik)
-        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-
-        // Full screen browser window
-        driver.manage().window().maximize();
+//        WebDriverManager.chromedriver().setup();
+//
+//        // Membuat instance dari ChromeDriver
+//        driver = new ChromeDriver();
+//
+//        // Membuat instance dari WebDriverWait dengan waktu tunggu secara explicit wait (misalnya, 5 detik)
+//        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+//
+//        // Full screen browser window
+//        driver.manage().window().maximize();
 
         // Membuka halaman Google
         driver.get("https://www.saucedemo.com/");
