@@ -7,9 +7,12 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import java.time.Duration;
+import org.testng.Assert;
+
 
 public class Login {
-    public static void main(String[] args) {
+
+    public void loginTestCase() {
 
         WebDriver driver;
         WebDriverWait wait;
@@ -20,8 +23,8 @@ public class Login {
         // Membuat instance dari ChromeDriver
         driver = new ChromeDriver();
 
-        // Membuat instance dari WebDriverWait dengan waktu tunggu secara explicit wait (misalnya, 10 detik)
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        // Membuat instance dari WebDriverWait dengan waktu tunggu secara explicit wait (misalnya, 5 detik)
+        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
 
         // Full screen browser window
         driver.manage().window().maximize();
@@ -43,6 +46,10 @@ public class Login {
         // Mencari button login dan click
         WebElement loginButton = driver.findElement(By.id("login-button"));
         loginButton.click();
+
+        // Assert jika login telah sukses dengan mengecek bahwa inventory container sudah tampil
+        WebElement inventoryContainer = driver.findElement(By.id("inventory_container"));
+        Assert.assertTrue(inventoryContainer.isDisplayed(), "Inventory container is not displayed");
 
         // Menutup browser
         driver.quit();
