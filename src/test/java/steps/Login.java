@@ -12,10 +12,11 @@ import org.testng.Assert;
 
 public class Login {
 
-    public void loginTestCase() {
+    //Declaration
+    WebDriver driver;
+    WebDriverWait wait;
 
-        WebDriver driver;
-        WebDriverWait wait;
+    public void loginTestCase() {
 
         // Mengatur WebDriverManager untuk menangani setup ChromeDriver
         WebDriverManager.chromedriver().setup();
