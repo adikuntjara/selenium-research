@@ -33,41 +33,29 @@ public class Login {
 
     public void loginTestCase() {
 
-        // Mengatur WebDriverManager untuk menangani setup ChromeDriver
-//        WebDriverManager.chromedriver().setup();
-//
-//        // Membuat instance dari ChromeDriver
-//        driver = new ChromeDriver();
-//
-//        // Membuat instance dari WebDriverWait dengan waktu tunggu secara explicit wait (misalnya, 5 detik)
-//        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-//
-//        // Full screen browser window
-//        driver.manage().window().maximize();
-
-        // Membuka halaman Google
+        // Open the saucedemo website
         driver.get("https://www.saucedemo.com/");
 
-        // Print judul halaman
+        // Print the page title
         System.out.println("Title of the page is: " + driver.getTitle());
 
-        // Mencari field username dan memasukkan username
+        // Find the username field and enter the username
         WebElement usernameField = driver.findElement(By.id("user-name"));
         usernameField.sendKeys("standard_user");
 
-        // Mencari field password dan memasukkan password
+        // Find the password field and enter the password
         WebElement passwordField = driver.findElement(By.id("password"));
         passwordField.sendKeys("secret_sauce");
 
-        // Mencari button login dan click
+        // Find the login button and click it
         WebElement loginButton = driver.findElement(By.id("login-button"));
         loginButton.click();
 
-        // Assert jika login telah sukses dengan mengecek bahwa inventory container sudah tampil
+        // Assert that the login was successful by checking if the inventory container is displayed
         WebElement inventoryContainer = driver.findElement(By.id("inventory_container"));
         Assert.assertTrue(inventoryContainer.isDisplayed(), "Inventory container is not displayed");
 
-        // Menutup browser
+        // Close the browser
         driver.quit();
     }
 }
