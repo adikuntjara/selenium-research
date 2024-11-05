@@ -55,6 +55,11 @@ public class Login {
         WebElement inventoryContainer = driver.findElement(By.id("inventory_container"));
         Assert.assertTrue(inventoryContainer.isDisplayed(), "Inventory container is not displayed");
 
+        // Assert that the page title is correct
+        String expectedTitle = "Swag Labs";
+        String actualTitle = driver.getTitle();
+        Assert.assertEquals(actualTitle, expectedTitle, "The page title is incorrect!");
+
         // Close the browser
         driver.quit();
     }
