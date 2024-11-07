@@ -31,7 +31,47 @@ public class Login {
         driver.manage().window().maximize();
     }
 
-    public void loginTestCase() {
+    public void loginSuccess() {
+
+        try {
+
+            // Open the saucedemo website
+            driver.get("https://www.saucedemo.com/");
+
+            // Print the page title
+            System.out.println("Title of the page is: " + driver.getTitle());
+
+            // Find the username field and enter the username
+            WebElement usernameField = driver.findElement(By.id("user-name"));
+            usernameField.sendKeys("standard_user");
+
+            // Find the password field and enter the password
+            WebElement passwordField = driver.findElement(By.id("password"));
+            passwordField.sendKeys("secret_sauce");
+
+            // Find the login button and click it
+            WebElement loginButton = driver.findElement(By.id("login-button"));
+            loginButton.click();
+
+            // Assert that the login was successful by checking if the inventory container is displayed
+            WebElement inventoryContainer = driver.findElement(By.id("inventory_container"));
+            Assert.assertTrue(inventoryContainer.isDisplayed(), "Inventory container is not displayed");
+
+            // Assert that the page title is correct
+            String expectedTitle = "Swag Labs";
+            String actualTitle = driver.getTitle();
+            Assert.assertEquals(actualTitle, expectedTitle, "The page title is incorrect!");
+        }
+
+        finally {
+            // Close the browser after the execution
+            driver.quit();
+        }
+    }
+
+    public void loginFailed() {
+
+        try {
 
         // Open the saucedemo website
         driver.get("https://www.saucedemo.com/");
@@ -45,22 +85,21 @@ public class Login {
 
         // Find the password field and enter the password
         WebElement passwordField = driver.findElement(By.id("password"));
-        passwordField.sendKeys("secret_sauce");
+        passwordField.sendKeys("12345");
 
         // Find the login button and click it
         WebElement loginButton = driver.findElement(By.id("login-button"));
         loginButton.click();
 
-        // Assert that the login was successful by checking if the inventory container is displayed
-        WebElement inventoryContainer = driver.findElement(By.id("inventory_container"));
-        Assert.assertTrue(inventoryContainer.isDisplayed(), "Inventory container is not displayed");
+        // Assert that the login was unsuccessful by checking if the inventory container is displayed
+        WebElement errorLogin = driver.findElement(By.xpath("//h3[@data-test='error'][contains(.,'Epic sadface: Username and password do not match any user in this service')]"));
+        Assert.assertTrue(errorLogin.isDisplayed(), "Error Login is not displayed");
+        }
 
-        // Assert that the page title is correct
-        String expectedTitle = "Swag Labs";
-        String actualTitle = driver.getTitle();
-        Assert.assertEquals(actualTitle, expectedTitle, "The page title is incorrect!");
-
-        // Close the browser
-        driver.quit();
+        finally {
+            // Close the browser after the execution
+            driver.quit();
+        }
     }
+
 }
