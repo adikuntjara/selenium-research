@@ -9,6 +9,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import java.time.Duration;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 
@@ -35,7 +36,7 @@ public class Login {
         driver.get("https://www.saucedemo.com/");
     }
 
-    @Test
+    @Test(priority = 1)
     public void loginSuccess() {
         // Print the page title
         System.out.println("Title of the page is: " + driver.getTitle());
@@ -62,7 +63,7 @@ public class Login {
         Assert.assertEquals(actualTitle, expectedTitle, "The page title is incorrect!");
     }
 
-    @Test
+    @Test(priority = 2)
     public void loginFailed() {
         // Print the page title
         System.out.println("Title of the page is: " + driver.getTitle());
@@ -82,5 +83,13 @@ public class Login {
         // Assert that the login was unsuccessful by checking if the inventory container is displayed
         WebElement errorLogin = driver.findElement(By.xpath("//h3[@data-test='error'][contains(.,'Epic sadface: Username and password do not match any user in this service')]"));
         Assert.assertTrue(errorLogin.isDisplayed(), "Error Login is not displayed");
+    }
+
+    @AfterMethod
+    public void tearDown() {
+        // Close the browser after each test method
+        if (driver != null) {
+            driver.quit();
+        }
     }
 }
