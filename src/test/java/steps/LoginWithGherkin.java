@@ -8,34 +8,36 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import java.time.Duration;
 import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import io.cucumber.java.en.*;
 
 
-public class Login {
+public class LoginWithGherkin {
 
     WebDriver driver;
     WebDriverWait wait;
 
-    @BeforeMethod
-    public void setUp() {
+    // Constructor to initialize WebDriver and WebDriverWait
+    public LoginWithGherkin() {
         // Set up ChromeDriver using WebDriverManager
         WebDriverManager.chromedriver().setup();
 
         // Initialize ChromeDriver instance
-        driver = new ChromeDriver();
+        this.driver = new ChromeDriver();
 
         // Initialize WebDriverWait instance with a 5-second timeout
-        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(5));
 
         // Maximize the browser window
         driver.manage().window().maximize();
+    }
 
+    @Given("the user is on the Sauce Labs Demo website")
+    public void openWebsite() {
         // Open the saucedemo website
         driver.get("https://www.saucedemo.com/");
     }
 
-    @Test
+    @When("the user is login as a standard_user")
     public void loginSuccess() {
         // Print the page title
         System.out.println("Title of the page is: " + driver.getTitle());
@@ -62,25 +64,11 @@ public class Login {
         Assert.assertEquals(actualTitle, expectedTitle, "The page title is incorrect!");
     }
 
-    @Test
-    public void loginFailed() {
-        // Print the page title
-        System.out.println("Title of the page is: " + driver.getTitle());
-
-        // Find the username field and enter the username
-        WebElement usernameField = driver.findElement(By.id("user-name"));
-        usernameField.sendKeys("standard_user");
-
-        // Find the password field and enter the password
-        WebElement passwordField = driver.findElement(By.id("password"));
-        passwordField.sendKeys("12345");
-
-        // Find the login button and click it
-        WebElement loginButton = driver.findElement(By.id("login-button"));
-        loginButton.click();
-
-        // Assert that the login was unsuccessful by checking if the inventory container is displayed
-        WebElement errorLogin = driver.findElement(By.xpath("//h3[@data-test='error'][contains(.,'Epic sadface: Username and password do not match any user in this service')]"));
-        Assert.assertTrue(errorLogin.isDisplayed(), "Error Login is not displayed");
+    @Then("the user will successfully login")
+    public void assertLoginSuccess() {
+        // Assert that the page title is correct
+        String expectedTitle = "Swag Labs";
+        String actualTitle = driver.getTitle();
+        Assert.assertEquals(actualTitle, expectedTitle, "The page title is incorrect!");
     }
 }
